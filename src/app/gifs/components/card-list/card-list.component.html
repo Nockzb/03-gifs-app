@@ -2,7 +2,7 @@
     <div class="col-md-3 col-sm-6" *ngFor="let gif of resultadosGifs">
         <div class="card mb-2 text-center bg-dark">
             <img class="card-img-top" [src]="gif.images.original?.['url']" alt="Card image cap">
-            <h5 class="card-title text-white">{{ gif.title }}</h5>
+            <h5 class="card-title text-white" *ngIf="gif.title != null">{{ gif.title }}</h5>
         </div>
     </div>
 </div>
