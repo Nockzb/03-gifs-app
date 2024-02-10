@@ -10,25 +10,14 @@ export class GifsService {
   private apiKey: string = 'IsQyHrWS9GjZMX0zOTUrPQmg7wB5I6Zf';
   private serviceUrl: string = 'https://api.giphy.com/v1/gifs'
 
-  private _listadoGifs: Gif[] = []
-  private _historialEtiquetas: string[] = [];
-  private _resultadosActualizados = new Subject<Gif[]>();
+  public listadoGifs: Gif[] = []
+  private _historialEtiquetas: string[] = [];  
 
   constructor(private http: HttpClient) { }
-
-  // Método para obtener una copia de listadoGifs
-  getListadoGifs(): Gif[] {
-    return [...this._listadoGifs];
-  }
 
   // Método para obtener una copia de _historialEtiquetas
   get historialEtiquetas() {
     return [...this._historialEtiquetas]
-  }
-
-   // Método para obtener el Subject de resultados actualizados
-   getResultadosActualizadosObservable() {
-    return this._resultadosActualizados.asObservable();
   }
 
   // Método para organizar el historial de búsquedas
@@ -61,12 +50,8 @@ export class GifsService {
       .set('q', etiqueta)
       .set('limit', 10)
 
-    this.http.get<SearchResponse>(`${this.serviceUrl}/search`, { params }).subscribe(resp => {
-      console.log("respuesta: ", resp.data); // test
-      this._listadoGifs = resp.data
-      this._resultadosActualizados.next(this._listadoGifs);  // Notificar a los suscriptores
-
-      console.log("listado guardado: ", this._listadoGifs); // test
+    this.http.get<SearchResponse>(`${this.serviceUrl}/search`, { params }).subscribe(resp => {      
+      this.listadoGifs = resp.data      
     })
   }
 }
