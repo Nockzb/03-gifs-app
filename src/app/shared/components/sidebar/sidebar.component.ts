@@ -8,10 +8,13 @@ import { GifsService } from 'src/app/gifs/services/gifs.service';
 })
 
 export class SidebarComponent {
+  constructor (private gifsService: GifsService) { } // aqui se inyecta el servicio
   
   crearBotones(): string[] {
     return this.gifsService.historialEtiquetas;
   }
 
-  constructor (private gifsService: GifsService) { } // aqui se inyecta el servicio
+  cargarEtiqueta(etiqe: string): void {
+    this.gifsService.buscarEtiqueta(etiqe)
+  }
 }

@@ -1,29 +1,8 @@
-<!-- <div class="row">
-  <div class="col-md-3 col-sm-6" *ngFor="let gif of resultadosGifs">
-    <div class="card mb-2 text-center bg-dark">
-      <img class="card-img-top" [src]="gif.images.original?.['url']" alt="Gif Image">      
+<div class="row">
+    <div class="col-md-3 col-sm-6" *ngFor="let gif of resultadosGifs">
+        <div class="card mb-2 text-center bg-dark">
+            <img class="card-img-top" [src]="gif.images.original?.['url']" alt="Card image cap">
+            <h5 class="card-title text-white" *ngIf="gif.title != null">{{ gif.title }}</h5>
+        </div>
     </div>
-    <h5 class="card-title text-white">{{ gif.title }}</h5>
-  </div>
-</div> -->
-
-<div class="card" style="width: 18rem;" *ngFor="let gif of resultadosGifs">
-  <img class="card-img-top" [src]="gif.images.original?.['url']" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
 </div>
-
-<!-- <div class="row">
-  <div class="col-md-3 col-sm-6">
-    <div class="card mb-2 text-center bg-dark" *ngFor="let result of listaGifs" >
-
-
-      <div class="card-body">
-        <p class="card-text text-white">A ve!</p>
-      </div>
-    </div>
-  </div>
-</div> -->

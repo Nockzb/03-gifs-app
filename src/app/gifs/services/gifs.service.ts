@@ -1,19 +1,20 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Gif, SearchResponse } from '../interfaces/gifs.interfaces';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GifsService {
+  public listadoGifs: Gif[] = []
+
+  private _historialEtiquetas: string[] = [];
   private apiKey: string = 'IsQyHrWS9GjZMX0zOTUrPQmg7wB5I6Zf';
   private serviceUrl: string = 'https://api.giphy.com/v1/gifs'
 
-  public listadoGifs: Gif[] = []
-  private _historialEtiquetas: string[] = [];  
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.cargarLocalStorage();
+  }
 
   // Método para obtener una copia de _historialEtiquetas
   get historialEtiquetas() {
@@ -50,8 +51,23 @@ export class GifsService {
       .set('q', etiqueta)
       .set('limit', 10)
 
-    this.http.get<SearchResponse>(`${this.serviceUrl}/search`, { params }).subscribe(resp => {      
-      this.listadoGifs = resp.data      
+    this.http.get<SearchResponse>(`${this.serviceUrl}/search`, { params }).subscribe(resp => {
+      this.listadoGifs = resp.data
     })
+
+    // Se almacena la etiqueta después de buscarla
+    this.almacenarLocalStorage();
+  }
+
+  private almacenarLocalStorage(): void {
+    localStorage.setItem('historial', JSON.stringify(this._historialEtiquetas));
+  }
+
+  private cargarLocalStorage(): void {
+    if (!localStorage.getItem('historial')) return;
+    this._historialEtiquetas = JSON.parse(localStorage.getItem('historial')!);
+
+    if (this._historialEtiquetas.length === 0) return;
+    this.buscarEtiqueta(this._historialEtiquetas[0]);
   }
 }
